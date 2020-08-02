@@ -8,7 +8,7 @@ import (
 func InitializeLogging() *zap.Logger {
 	cfg := zap.NewProductionConfig()
 	cfg.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
-	cfg.OutputPaths = []string {
+	cfg.OutputPaths = []string{
 		"stdout",
 		"main.log",
 	}
