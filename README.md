@@ -20,3 +20,10 @@ go run github.com/kwlo/gravity
 ```
 CGO_ENABLED=0 go test ./...
 ```
+
+### Todo backlogs
+
+- Define Interfaces (Shapes)
+- Define Sphere
+- Define RigidBody
+- Simulations
