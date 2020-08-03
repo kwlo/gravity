@@ -13,7 +13,7 @@ func main() {
 	level2.Test3()
 	pack.Test()
 
-	physics.ConvertDistance(10, physics.Normalized, physics.Miles)
+	physics.ConvertDistance(10, physics.Yards, physics.Inches)
 
 	StartServer(8080)
 }

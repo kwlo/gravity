@@ -1,6 +1,7 @@
 package physics
 
 import (
+	"fmt"
 	"go.uber.org/zap"
 )
 
@@ -16,12 +17,29 @@ const (
 	YardToInch       float64      = 36
 )
 
-func ConversionMap() []map[string]interface{} {
-	zap.S().Infof("Converting fro")
-	conversion := map[string][int] {
-		"fdsfS": 100,
+func ConversionDistanceRate(sourceType DistanceEnum, targetType DistanceEnum) float64 {
+	conversion := map[string]float64 {
+		"0_1": NormalizedToYard,
+		"1_0": 1/NormalizedToYard,
+		"0_2": NormalizedToYard * YardToMile,
+		"2_0": 1/NormalizedToYard * 1/YardToMile,
+		"1_2": YardToMile,
+		"2_1": 1/YardToMile,
+		"0_3": NormalizedToYard * YardToInch,
+		"3_0": 1/NormalizedToYard * 1/YardToInch,
+		"1_3": YardToInch,
+		"3_1": 1/YardToInch,
+		"2_3": 1/YardToMile * YardToInch,
+		"3_2": 1/YardToInch * YardToMile,
 	}
-	return conversion
+	result, ok := conversion[fmt.Sprintf("%d_%d", sourceType, targetType)]
+
+	if ok {
+		return result
+	}
+
+	zap.S().Errorf("cannot find conversion rate %s", sourceType)
+	return 0
 }
 
 func ConvertDistance(
@@ -29,11 +47,13 @@ func ConvertDistance(
 	sourceType DistanceEnum,
 	targetType DistanceEnum) float64 {
 
-	zap.S().Infof("Converting from %s to %s", sourceType, targetType)
-
 	if sourceType == targetType {
 		return source
 	}
 
-	return 5
+	rate := ConversionDistanceRate(sourceType, targetType)
+
+	zap.S().Infof("Result: %f", source * rate)
+
+	return source * rate
 }

@@ -14,3 +14,9 @@ go get -u go.uber.org/zap
 ```
 go run github.com/kwlo/gravity
 ```
+
+## Run tests
+
+```
+CGO_ENABLED=0 go test ./...
+```
