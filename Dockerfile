@@ -6,6 +6,8 @@ WORKDIR /go/src/github.com/kwlo/gravity
 
 COPY . .
 
+RUN go test ./...
+
 RUN go install github.com/kwlo/gravity
 
 CMD ["gravity"]
