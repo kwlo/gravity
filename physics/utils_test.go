@@ -28,7 +28,7 @@ func TestConvertDistance(t *testing.T) {
 	for idx, tc := range tests {
 		got := ConvertDistance(tc.num, tc.source, tc.target)
 		if math.Abs(got-tc.want) > float64EqualityThreshold {
-			t.Fatalf("expected for case #%d %v, %v, got: %v", idx, tc.num, tc.want, got)
+			t.Fatalf("FAILED: case #%d %v, %v, got: %v", idx, tc.num, tc.want, got)
 		}
 	}
 }
