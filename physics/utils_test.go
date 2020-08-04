@@ -23,6 +23,7 @@ func TestConvertDistance(t *testing.T) {
 		{6.41, Miles, Yards, 11281.6},
 		{5.21, Normalized, Inches, 1875600},
 		{71, Inches, Normalized, 0.000197222},
+		{0, Inches, Normalized, 0},
 	}
 
 	for idx, tc := range tests {

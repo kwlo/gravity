@@ -2,11 +2,14 @@ package physics
 
 import (
 	"fmt"
+
 	"go.uber.org/zap"
 )
 
+// DistanceEnum Enumeration for distance (Normalized, Yards, Miles, Inches)
 type DistanceEnum int
 
+// Constants
 const (
 	Normalized       DistanceEnum = 0
 	Yards            DistanceEnum = 1
@@ -17,6 +20,7 @@ const (
 	YardToInch       float64      = 36
 )
 
+// ConversionDistanceRate - Returns the rate source distance to target distance
 func ConversionDistanceRate(
 	sourceType DistanceEnum,
 	targetType DistanceEnum,
@@ -45,6 +49,7 @@ func ConversionDistanceRate(
 	return 0, false
 }
 
+// ConvertDistance - Convert source distance to target distance
 func ConvertDistance(
 	source float64,
 	sourceType DistanceEnum,
