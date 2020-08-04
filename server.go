@@ -11,15 +11,15 @@ type Server struct {
 }
 
 // Route Sample route. To be deleted
-func (v *Server) Route(w http.ResponseWriter, r *http.Request) {
-	v.logger.Infof("Served: %s", r.URL.Path[1:])
+func (srv *Server) Route(w http.ResponseWriter, r *http.Request) {
+	srv.logger.Infof("Served: %s", r.URL.Path[1:])
 	fmt.Fprintf(w, "Hello, %s!", r.URL.Path[1:])
 }
 
 // Start starts up server and listens at port
-func (v *Server) Start(port int) {
-	v.logger.Infof("Starting Server at port %d", port)
+func (srv *Server) Start(port int) {
+	srv.logger.Infof("Starting Server at port %d", port)
 
-	http.HandleFunc("/", v.Route)
+	http.HandleFunc("/", srv.Route)
 	http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 }
