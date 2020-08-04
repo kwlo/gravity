@@ -21,7 +21,27 @@ go run github.com/kwlo/gravity
 CGO_ENABLED=0 go test ./...
 ```
 
-### Todo backlogs
+## Configurations / Env var
+
+```
+PORT=8080
+```
+
+## Docker
+
+### Docker Build
+
+```
+docker build --tag gravity .
+```
+
+### Docker Run
+
+```
+docker run --rm --detach --publish 8080:8080 --name gravity gravity
+```
+
+## Todo backlogs
 
 - Define Interfaces (Shapes)
 - Define Sphere
