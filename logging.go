@@ -5,8 +5,14 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-// InitializeLogging initialize logger
-func InitializeLogging() *zap.Logger {
+// Logger interface
+type Logger interface {
+	Infof(template string, args ...interface{})
+	Sync() error
+}
+
+// NewLogger creates new logger using zap library
+func NewLogger() Logger {
 	cfg := zap.NewProductionConfig()
 	cfg.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
 	cfg.OutputPaths = []string{
@@ -14,7 +20,6 @@ func InitializeLogging() *zap.Logger {
 		"main.log",
 	}
 	logger, _ := cfg.Build()
-	zap.ReplaceGlobals(logger)
 
-	return logger
+	return logger.Sugar()
 }

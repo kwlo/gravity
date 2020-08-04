@@ -15,10 +15,11 @@ func getPort() int {
 }
 
 func main() {
-	logger := InitializeLogging()
+	logger := NewLogger()
 
 	// Doesn't really do anything for now, since server will get interupted
 	defer logger.Sync()
 
-	StartServer(getPort())
+	server := &Server{logger: logger}
+	server.Start(getPort())
 }

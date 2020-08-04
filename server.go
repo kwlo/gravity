@@ -3,20 +3,23 @@ package main
 import (
 	"fmt"
 	"net/http"
-
-	"go.uber.org/zap"
 )
 
-// HelloServer Sample route. To be deleted
-func HelloServer(w http.ResponseWriter, r *http.Request) {
-	zap.S().Infof("Served: %s", r.URL.Path[1:])
+// Server holds the server configurations and context
+type Server struct {
+	logger Logger
+}
+
+// Route Sample route. To be deleted
+func (v *Server) Route(w http.ResponseWriter, r *http.Request) {
+	v.logger.Infof("Served: %s", r.URL.Path[1:])
 	fmt.Fprintf(w, "Hello, %s!", r.URL.Path[1:])
 }
 
-// StartServer Start up server and listen at port
-func StartServer(port int) {
-	zap.S().Infof("Starting Server at port %d", port)
+// Start starts up server and listens at port
+func (v *Server) Start(port int) {
+	v.logger.Infof("Starting Server at port %d", port)
 
-	http.HandleFunc("/", HelloServer)
+	http.HandleFunc("/", v.Route)
 	http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 }
