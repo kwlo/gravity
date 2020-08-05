@@ -1,2 +1,5 @@
 gravity
 *.log
+
+node_modules/
+build/
