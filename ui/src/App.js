@@ -1,9 +1,15 @@
 import React from 'react';
+import { Router } from "@reach/router";
 
-const App = () => {
+import LandingPage from './components/LandingPage';
+import Blank from './components/Blank';
+
+export default function () {
   return (
-    <div>Coming soon!</div>
+    <Router>
+      <LandingPage path="/" />
+      <Blank path="blank" />
+    </Router>
   );
-};
 
-export default App;
+};
