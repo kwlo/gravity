@@ -20,6 +20,8 @@ func (srv *Server) Route(w http.ResponseWriter, r *http.Request) {
 func (srv *Server) Start(port int) {
 	srv.logger.Infof("Starting Server at port %d", port)
 
+	fs := http.FileServer(http.Dir("./static"))
+	http.Handle("/", fs)
 	http.HandleFunc("/ping", srv.Route)
 	http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 }

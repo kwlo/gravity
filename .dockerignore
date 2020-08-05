@@ -1,0 +1,5 @@
+gravity
+*.log
+
+ui/node_modules/
+ui/build/
