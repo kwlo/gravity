@@ -1,6 +1,9 @@
 gravity
 *.log
 
+cp.out
+coverage.html
+
 node_modules/
 build/
 

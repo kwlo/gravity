@@ -20,7 +20,10 @@ go run github.com/kwlo/gravity
 ## Run tests
 
 ```
-CGO_ENABLED=0 go test ./...
+CGO_ENABLED=0 go test ./... -coverprofile cp.out
+
+/* Generate HTML Coverage Report after running test */
+go tool cover -html=cp.out -o coverage.html
 ```
 
 ## Configurations / Env var
