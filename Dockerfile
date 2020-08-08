@@ -8,9 +8,7 @@ RUN npm install
 
 COPY ui/ /src/
 
-ENV ci true
-
-RUN npm run test
+RUN CI=true npm run test
 
 RUN npm run build
 
