@@ -48,3 +48,20 @@ func TestDet(t *testing.T) {
 		}
 	}
 }
+
+func TestBarycentricCoords(t *testing.T) {
+	gotu, gotv, gotw, gotx := BarycentricCoords(
+		NewCoord3D(10, 0, 10),
+		NewCoord3D(-10, 0, 10),
+		NewCoord3D(0, 0, -10),
+		NewCoord3D(0, 10, 0),
+		NewCoord3D(2, 2, 2),
+	)
+
+	if gotu < 0 && gotv < 0 && gotw < 0 && gotx < 0 {
+		// Point P should be inside the ABCD shape, therefore
+		// u, v, w, x should be all positive
+		values := []float64{gotu, gotv, gotw, gotx}
+		t.Fatalf("FAILED: %#v", values)
+	}
+}

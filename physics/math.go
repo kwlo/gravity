@@ -1,6 +1,8 @@
 package physics
 
-import "gonum.org/v1/gonum/mat"
+import (
+	"gonum.org/v1/gonum/mat"
+)
 
 // Coord3D is a struct for x, y, z 3D coordinate
 type Coord3D mat.Vector
@@ -22,6 +24,7 @@ func NewMatrix(rows int, cols int, data []float64) Matrix {
 	return mat.NewDense(rows, cols, data)
 }
 
+// Det returns the determinant of the given matrix
 func Det(m Matrix) float64 {
 	return mat.Det(m)
 }
@@ -57,6 +60,14 @@ func BarycentricCoords(
 	d Coord3D,
 	p Coord3D,
 ) (float64, float64, float64, float64) {
-	// detPBCD := Det(MatrixFrom4Coord3D(p, b, c, d))
-	return 0, 0, 0, 0
+	detPBCD := Det(MatrixFrom4Coord3D(p, b, c, d))
+	detAPCD := Det(MatrixFrom4Coord3D(a, p, c, d))
+	detABPD := Det(MatrixFrom4Coord3D(a, b, p, d))
+	detABCP := Det(MatrixFrom4Coord3D(a, b, c, p))
+	detABCD := Det(MatrixFrom4Coord3D(a, b, c, d))
+
+	return detPBCD / detABCD,
+		detAPCD / detABCD,
+		detABPD / detABCD,
+		detABCP / detABCD
 }
