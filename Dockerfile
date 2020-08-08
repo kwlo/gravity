@@ -8,6 +8,10 @@ RUN npm install
 
 COPY ui/ /src/
 
+ENV ci true
+
+RUN npm run test
+
 RUN npm run build
 
 FROM golang:1.14.6-buster as gobuilder
