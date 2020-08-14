@@ -31,7 +31,7 @@ const useSetup = (canvasRef, onRender, onSetupScene) => {
     
     engine.runRenderLoop(() => {
       if (onRender) {
-        onRender(scene);
+        onRender(engine, scene);
       }
       scene.render();
     });
