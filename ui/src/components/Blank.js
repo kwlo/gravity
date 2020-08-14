@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Simulator from './simulator/Simulator';
+
 export default function() {
-  return (<div>Blank</div>);
+  return (<Simulator />);
 };
