@@ -1,15 +1,15 @@
 import React from 'react';
-import { Router } from "@reach/router";
+import { Router } from '@reach/router';
 import { makeStyles } from '@material-ui/core/styles';
 
 import LandingPage from './components/LandingPage';
 import Blank from './components/Blank';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   router: {
     height: '100%',
-    width: '100%'
-  }
+    width: '100%',
+  },
 }));
 
 export default function () {
@@ -21,5 +21,4 @@ export default function () {
       <Blank path="blank" />
     </Router>
   );
-
-};
+}

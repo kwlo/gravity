@@ -3,61 +3,55 @@ import { makeStyles } from '@material-ui/core/styles';
 import * as BABYLON from '@babylonjs/core';
 import Canvas from './Canvas';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   info: {
     position: 'absolute',
     zIndex: 1000,
-    color: 'red'
-  }
+    color: 'red',
+  },
 }));
 
 let angle = 0;
 const handleRender = (infoRef) => (engine, scene) => {
-  const cot = scene.getNodeByID("light2Node");
+  const cot = scene.getNodeByID('light2Node');
 
   scene.registerBeforeRender(() => {
     cot.rotation.y = angle;
     angle = (angle + 0.0001) % 4;
   });
 
+  /* eslint-disable no-param-reassign */
   infoRef.current.innerHTML = `FPS: ${engine.getFps().toFixed()}`;
 };
 
 const handleSetupScene = (scene) => {
   const camera = new BABYLON.FreeCamera(
-    "camera1",
+    'camera1',
     new BABYLON.Vector3(0, 5, -10),
-    scene
+    scene,
   );
   camera.setTarget(BABYLON.Vector3.Zero());
 
   // Add lights
-  new BABYLON.HemisphericLight(
-    "light1",
-    new BABYLON.Vector3(1, 1, 0),
-    scene
-  );
+  /* eslint-disable no-new */
+  new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(1, 1, 0), scene);
 
   const light = new BABYLON.PointLight(
-    "light2",
+    'light2',
     new BABYLON.Vector3(0, 1, -1),
-    scene
+    scene,
   );
 
-  const cot = new BABYLON.TransformNode("light2Node");
+  const cot = new BABYLON.TransformNode('light2Node');
 
   light.parent = cot;
 
   // Add sphere
-  BABYLON.MeshBuilder.CreateSphere(
-    "sphere",
-    { diameter: 2 },
-    scene
-  );
+  BABYLON.MeshBuilder.CreateSphere('sphere', { diameter: 2 }, scene);
 };
 
 const Simulator = () => {

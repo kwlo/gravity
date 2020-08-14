@@ -2,27 +2,24 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Engine, Scene } from '@babylonjs/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     height: '100%',
     overflow: 'hidden',
     width: '100%',
     padding: 0,
-    margin: 0
+    margin: 0,
   },
   canvas: {
     height: '100%',
     width: '100%',
-    touchAction: 'none'
-  }
+    touchAction: 'none',
+  },
 }));
 
 const useSetup = (canvasRef, onRender, onSetupScene, onDestroy) => {
   React.useEffect(() => {
-    const engine = new Engine(
-      canvasRef.current,
-      true
-    );
+    const engine = new Engine(canvasRef.current, true);
     const scene = new Scene(engine);
 
     if (onSetupScene) {
@@ -40,7 +37,7 @@ const useSetup = (canvasRef, onRender, onSetupScene, onDestroy) => {
       if (scene) {
         scene.getEngine().resize();
       }
-    }
+    };
     window.addEventListener('resize', resize);
 
     return () => {
@@ -56,7 +53,7 @@ const useSetup = (canvasRef, onRender, onSetupScene, onDestroy) => {
       if (engine) {
         engine.dispose();
       }
-    }
+    };
   }, [canvasRef, onRender, onSetupScene, onDestroy]);
 };
 

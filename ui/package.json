@@ -17,6 +17,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint": "eslint src/",
+    "lint:fix": "eslint --fix src/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -35,5 +37,15 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "http://localhost:8080",
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.6",
+    "prettier": "^2.0.5"
+  }
 }

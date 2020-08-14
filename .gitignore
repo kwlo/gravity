@@ -4,6 +4,8 @@ gravity
 cp.out
 coverage.html
 
+.vscode/
+
 node_modules/
 build/
 
