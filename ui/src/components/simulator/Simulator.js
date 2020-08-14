@@ -66,6 +66,7 @@ const Simulator = () => {
       <Canvas
         onRender={handleRender(infoRef)}
         onSetupScene={handleSetupScene}
+        onDestroy={() => console.log('destroyed')}
       />
     </div>
   );

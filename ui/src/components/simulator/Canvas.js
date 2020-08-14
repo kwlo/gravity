@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const useSetup = (canvasRef, onRender, onSetupScene) => {
+const useSetup = (canvasRef, onRender, onSetupScene, onDestroy) => {
   React.useEffect(() => {
     const engine = new Engine(
       canvasRef.current,
@@ -44,19 +44,27 @@ const useSetup = (canvasRef, onRender, onSetupScene) => {
     window.addEventListener('resize', resize);
 
     return () => {
-      if (scene !== null) {
+      window.removeEventListener('resize', resize);
+
+      if (onDestroy) {
+        onDestroy(engine, scene);
+      }
+
+      if (scene) {
         scene.dispose();
       }
-      window.removeEventListener('resize', resize);
+      if (engine) {
+        engine.dispose();
+      }
     }
-  }, [canvasRef, onRender, onSetupScene]);
+  }, [canvasRef, onRender, onSetupScene, onDestroy]);
 };
 
-const Canvas = ({onRender, onSetupScene}) => {
+const Canvas = ({onRender, onSetupScene, onDestroy}) => {
   const classes = useStyles();
   const canvasRef = React.useRef();
 
-  useSetup(canvasRef, onRender, onSetupScene);
+  useSetup(canvasRef, onRender, onSetupScene, onDestroy);
 
   return (
     <div className={classes.root}>
@@ -65,4 +73,4 @@ const Canvas = ({onRender, onSetupScene}) => {
   );
 };
 
-export default Canvas;
+export default React.memo(Canvas);
