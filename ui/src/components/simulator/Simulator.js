@@ -4,7 +4,10 @@ import * as BABYLON from '@babylonjs/core';
 import Canvas from './Canvas';
 
 const useStyles = makeStyles((theme) => ({
-  
+  root: {
+    width: '100%',
+    height: '100%'
+  }
 }));
 
 const handleRender = (scene) => {
@@ -39,10 +42,12 @@ const Simulator = () => {
   const classes = useStyles();
 
   return (
-    <Canvas
-      onRender={handleRender}
-      onSetupScene={handleSetupScene}
-    />
+    <div className={classes.root}>
+      <Canvas
+        onRender={handleRender}
+        onSetupScene={handleSetupScene}
+      />
+    </div>
   );
 };
 

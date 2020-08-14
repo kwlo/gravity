@@ -17,14 +17,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const useSetup = (canvasRef, setScene, onRender, onSetupScene) => {
+const useSetup = (canvasRef, onRender, onSetupScene) => {
   React.useEffect(() => {
     const engine = new Engine(
       canvasRef.current,
       true
     );
     const scene = new Scene(engine);
-    setScene(scene);
 
     if (onSetupScene) {
       onSetupScene(scene);
@@ -50,15 +49,14 @@ const useSetup = (canvasRef, setScene, onRender, onSetupScene) => {
       }
       window.removeEventListener('resize', resize);
     }
-  }, [canvasRef, setScene, onRender, onSetupScene]);
+  }, [canvasRef, onRender, onSetupScene]);
 };
 
 const Canvas = ({onRender, onSetupScene}) => {
   const classes = useStyles();
   const canvasRef = React.useRef();
-  const [scene, setScene] = React.useState(null);
 
-  useSetup(canvasRef, setScene, onRender, onSetupScene);
+  useSetup(canvasRef, onRender, onSetupScene);
 
   return (
     <div className={classes.root}>
