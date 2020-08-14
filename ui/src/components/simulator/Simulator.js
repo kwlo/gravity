@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 let angle = 0;
 const handleRender = (infoRef) => (engine, scene) => {
   const cot = scene.getNodeByID("light2Node");
-  
+
   scene.registerBeforeRender(() => {
     cot.rotation.y = angle;
     angle = (angle + 0.0001) % 4;
@@ -28,23 +28,27 @@ const handleRender = (infoRef) => (engine, scene) => {
 };
 
 const handleSetupScene = (scene) => {
-  const camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+  const camera = new BABYLON.FreeCamera(
+    "camera1",
+    new BABYLON.Vector3(0, 5, -10),
+    scene
+  );
   camera.setTarget(BABYLON.Vector3.Zero());
-  
+
   // Add lights
   new BABYLON.HemisphericLight(
     "light1",
     new BABYLON.Vector3(1, 1, 0),
     scene
   );
-  
+
   const light = new BABYLON.PointLight(
     "light2",
     new BABYLON.Vector3(0, 1, -1),
     scene
   );
 
-  const cot = new BABYLON.TransformNode("light2Node"); 
+  const cot = new BABYLON.TransformNode("light2Node");
 
   light.parent = cot;
 

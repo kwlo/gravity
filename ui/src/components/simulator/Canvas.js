@@ -28,17 +28,17 @@ const useSetup = (canvasRef, onRender, onSetupScene, onDestroy) => {
     if (onSetupScene) {
       onSetupScene(scene);
     }
-    
+
     engine.runRenderLoop(() => {
       if (onRender) {
         onRender(engine, scene);
       }
       scene.render();
     });
-    
+
     const resize = () => {
       if (scene) {
-          scene.getEngine().resize();
+        scene.getEngine().resize();
       }
     }
     window.addEventListener('resize', resize);
@@ -60,7 +60,7 @@ const useSetup = (canvasRef, onRender, onSetupScene, onDestroy) => {
   }, [canvasRef, onRender, onSetupScene, onDestroy]);
 };
 
-const Canvas = ({onRender, onSetupScene, onDestroy}) => {
+const Canvas = ({ onRender, onSetupScene, onDestroy }) => {
   const classes = useStyles();
   const canvasRef = React.useRef();
 
