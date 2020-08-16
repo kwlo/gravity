@@ -9,15 +9,17 @@ import (
 
 // Server holds the server configurations and context
 type Server struct {
-	logger logging.Logger
-	addr   string
+	logger    logging.Logger
+	addr      string
+	serveFunc func(addr string, handler http.Handler) error
 }
 
 // NewServer creates a new struct Server
-func NewServer(logger logging.Logger, addr string) *Server {
+func NewServer(logger logging.Logger, addr string, serveFunc func(addr string, handler http.Handler) error) *Server {
 	return &Server{
-		logger: logger,
-		addr:   addr,
+		logger:    logger,
+		addr:      addr,
+		serveFunc: serveFunc,
 	}
 }
 
@@ -36,5 +38,6 @@ func (srv *Server) Start() {
 	router.Handle("/*", fs)
 
 	srv.logger.Infof("Starting server at: %v", srv.addr)
-	http.ListenAndServe(srv.addr, router)
+
+	srv.serveFunc(srv.addr, router)
 }

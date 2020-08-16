@@ -5,6 +5,8 @@ import (
 	"os"
 	"strconv"
 
+	"net/http"
+
 	"github.com/kwlo/gravity/logging"
 	"github.com/kwlo/gravity/server"
 )
@@ -24,7 +26,11 @@ func main() {
 	// Doesn't really do anything for now, since server will get interupted
 	defer logger.Sync()
 
-	server := server.NewServer(logger, fmt.Sprintf("0.0.0.0:%d", getPort()))
+	server := server.NewServer(
+		logger,
+		fmt.Sprintf("0.0.0.0:%d", getPort()),
+		http.ListenAndServe,
+	)
 
 	server.Start()
 }
