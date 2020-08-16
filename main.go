@@ -3,6 +3,9 @@ package main
 import (
 	"os"
 	"strconv"
+
+	"github.com/kwlo/gravity/logging"
+	"github.com/kwlo/gravity/server"
 )
 
 func getPort() int {
@@ -15,11 +18,11 @@ func getPort() int {
 }
 
 func main() {
-	logger := NewLogger()
+	logger := logging.NewLogger()
 
 	// Doesn't really do anything for now, since server will get interupted
 	defer logger.Sync()
 
-	server := &Server{logger: logger}
+	server := &server.Server{Logger: logger}
 	server.Start(getPort())
 }
