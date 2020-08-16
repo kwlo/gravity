@@ -12,14 +12,16 @@ type Server struct {
 	logger    logging.Logger
 	addr      string
 	serveFunc func(addr string, handler http.Handler) error
+	staticDir string
 }
 
 // NewServer creates a new struct Server
-func NewServer(logger logging.Logger, addr string, serveFunc func(addr string, handler http.Handler) error) *Server {
+func NewServer(logger logging.Logger, addr string, staticDir string, serveFunc func(addr string, handler http.Handler) error) *Server {
 	return &Server{
 		logger:    logger,
 		addr:      addr,
 		serveFunc: serveFunc,
+		staticDir: staticDir,
 	}
 }
 
@@ -34,7 +36,7 @@ func (srv *Server) Start() {
 	AddRoutes(srv, router)
 
 	// Add handling static files for UI
-	fs := http.FileServer(http.Dir("./static"))
+	fs := http.FileServer(http.Dir(srv.staticDir))
 	router.Handle("/*", fs)
 
 	srv.logger.Infof("Starting server at: %v", srv.addr)

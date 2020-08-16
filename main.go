@@ -29,6 +29,7 @@ func main() {
 	server := server.NewServer(
 		logger,
 		fmt.Sprintf("0.0.0.0:%d", getPort()),
+		"./static",
 		http.ListenAndServe,
 	)
 

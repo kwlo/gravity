@@ -33,8 +33,18 @@ func (srv *MockServer) serveFunc() func(addr string, handler http.Handler) error
 }
 
 func getFromURL(url string) (string, error) {
+	mockServer := MockServer{}
+	NewServer(
+		&mockServer.logger,
+		"foo",
+		"./mocks",
+		mockServer.serveFunc(),
+	).Start()
+	defer mockServer.server.Close()
+
 	httpClient := &http.Client{}
-	resp, err := httpClient.Get(url)
+
+	resp, err := httpClient.Get(mockServer.addr + url)
 
 	if err != nil {
 		return "", err
@@ -55,21 +65,13 @@ func getFromURL(url string) (string, error) {
 }
 
 func TestPingRoute(t *testing.T) {
-	mockServer := MockServer{}
-
-	NewServer(&mockServer.logger, "foo", mockServer.serveFunc()).Start()
-
-	got, err := getFromURL(mockServer.addr + "/ping")
-
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	got, err := getFromURL("/ping")
 	want := "pong"
 
-	if got != want {
+	if err != nil || got != want {
 		t.Fatalf(
-			"Response body not matching. Got: %v, Want: %v",
+			"Response body not matching. Err: %v, Got: %v, Want: %v",
+			err,
 			got,
 			want,
 		)
@@ -77,21 +79,13 @@ func TestPingRoute(t *testing.T) {
 }
 
 func TestVersionRoute(t *testing.T) {
-	mockServer := MockServer{}
-
-	NewServer(&mockServer.logger, "foo", mockServer.serveFunc()).Start()
-
-	got, err := getFromURL(mockServer.addr + "/version")
-
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	got, err := getFromURL("/version")
 	want := "0.0"
 
-	if !strings.Contains(got, want) {
+	if err != nil || !strings.Contains(got, want) {
 		t.Fatalf(
-			"Response body not matching. Got: %v, Should contains: %v",
+			"Response body not matching. Err: %v, Got: %v, Should contains: %v",
+			err,
 			got,
 			want,
 		)
@@ -99,21 +93,27 @@ func TestVersionRoute(t *testing.T) {
 }
 
 func TestSimulationIDRoute(t *testing.T) {
-	mockServer := MockServer{}
-
-	NewServer(&mockServer.logger, "foo", mockServer.serveFunc()).Start()
-
-	got, err := getFromURL(mockServer.addr + "/simulations/foobar")
-
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	got, err := getFromURL("/simulations/foobar")
 	want := "ID: foobar\n"
 
-	if got != want {
+	if err != nil || got != want {
 		t.Fatalf(
-			"Response body not matching. Got: %s, Want: %s",
+			"Response body not matching. Err: %v, Got: %v, Want: %v",
+			err,
+			got,
+			want,
+		)
+	}
+}
+
+func TestStaticFile(t *testing.T) {
+	got, err := getFromURL("/static_page.txt")
+	want := "static file here\n"
+
+	if err != nil || got != want {
+		t.Fatalf(
+			"Response body not matching. Err: %v, Got: %v, Want: %v",
+			err,
 			got,
 			want,
 		)
