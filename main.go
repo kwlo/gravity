@@ -24,9 +24,7 @@ func main() {
 	// Doesn't really do anything for now, since server will get interupted
 	defer logger.Sync()
 
-	server := &server.Server{
-		Addr:   fmt.Sprintf("0.0.0.0:%d", getPort()),
-		Logger: logger,
-	}
+	server := server.NewServer(logger, fmt.Sprintf("0.0.0.0:%d", getPort()))
+
 	server.Start()
 }
