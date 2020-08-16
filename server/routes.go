@@ -9,6 +9,10 @@ import (
 
 // AddRoutes adds the http routes to the router
 func AddRoutes(srv *Server, router *chi.Mux) {
+	router.Get("/version", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "0.0.1")
+	})
+
 	router.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "pong")
 	})

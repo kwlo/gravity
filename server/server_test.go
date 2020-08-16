@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 
 	"net/http/httptest"
 	"testing"
@@ -69,6 +70,28 @@ func TestPingRoute(t *testing.T) {
 	if got != want {
 		t.Fatalf(
 			"Response body not matching. Got: %v, Want: %v",
+			got,
+			want,
+		)
+	}
+}
+
+func TestVersionRoute(t *testing.T) {
+	mockServer := MockServer{}
+
+	NewServer(&mockServer.logger, "foo", mockServer.serveFunc()).Start()
+
+	got, err := getFromURL(mockServer.addr + "/version")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	want := "0.0"
+
+	if !strings.Contains(got, want) {
+		t.Fatalf(
+			"Response body not matching. Got: %v, Should contains: %v",
 			got,
 			want,
 		)
