@@ -7,8 +7,7 @@ https://gravitydocker.herokuapp.com/
 ## Installation
 
 ```
-go get -u github.com/go-delve/delve/cmd/dlv
-go get -u go.uber.org/zap
+go build github.com/kwlo/gravity
 ```
 
 ## Start

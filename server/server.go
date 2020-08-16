@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi"
@@ -24,21 +23,18 @@ func NewServer(logger logging.Logger, addr string) *Server {
 
 // Start starts up server and listens at port
 func (srv *Server) Start() {
-	r := chi.NewRouter()
+	router := chi.NewRouter()
 
-	r.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "pong")
-	})
+	// Add Middlewares from middlewares.go
+	AddMiddlewares(srv, router)
 
-	r.Get("/simulations/{simulationID}", func(w http.ResponseWriter, r *http.Request) {
-		simulationID := chi.URLParam(r, "simulationID")
-		srv.logger.Infof("Serving simulation ID: %v", simulationID)
-		fmt.Fprintf(w, "ID: %v\n", simulationID)
-	})
+	// Add routes from routes.go
+	AddRoutes(srv, router)
 
+	// Add handling static files for UI
 	fs := http.FileServer(http.Dir("./static"))
-	r.Handle("/*", fs)
+	router.Handle("/*", fs)
 
 	srv.logger.Infof("Starting server at: %v", srv.addr)
-	http.ListenAndServe(srv.addr, r)
+	http.ListenAndServe(srv.addr, router)
 }
