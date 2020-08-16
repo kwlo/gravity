@@ -11,14 +11,16 @@ import (
 // Server holds the server configurations and context
 type Server struct {
 	Logger logging.Logger
+	Addr   string
 }
 
 // Start starts up server and listens at port
-func (srv *Server) Start(port int) {
+func (srv *Server) Start() {
 	r := chi.NewRouter()
 
-	fs := http.FileServer(http.Dir("./static"))
-	r.Handle("/", fs)
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "api")
+	})
 
 	r.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "pong")
@@ -30,7 +32,9 @@ func (srv *Server) Start(port int) {
 		fmt.Fprintf(w, "ID: %v\n", simulationID)
 	})
 
-	addr := fmt.Sprintf(":%d", port)
-	srv.Logger.Infof("Starting server at port: ", addr)
-	http.ListenAndServe(addr, r)
+	fs := http.FileServer(http.Dir("./static"))
+	r.Handle("/*", fs)
+
+	srv.Logger.Infof("Starting server at: %v", srv.Addr)
+	http.ListenAndServe(srv.Addr, r)
 }

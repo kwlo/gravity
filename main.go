@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 
@@ -23,6 +24,9 @@ func main() {
 	// Doesn't really do anything for now, since server will get interupted
 	defer logger.Sync()
 
-	server := &server.Server{Logger: logger}
-	server.Start(getPort())
+	server := &server.Server{
+		Addr:   fmt.Sprintf("0.0.0.0:%d", getPort()),
+		Logger: logger,
+	}
+	server.Start()
 }
