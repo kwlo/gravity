@@ -5,7 +5,60 @@ import (
 )
 
 // Coord3D is a struct for x, y, z 3D coordinate
-type Coord3D mat.Vector
+type Coord3D interface {
+	AtVec(int) float64
+	Len() int
+	AtX() float64
+	AtY() float64
+	AtZ() float64
+	X(float64)
+	Y(float64)
+	Z(float64)
+}
+
+type coord3DImpl struct {
+	vec *mat.VecDense
+}
+
+// AtVec returns the value at i index
+func (c *coord3DImpl) AtVec(i int) float64 {
+	return c.vec.AtVec(i)
+}
+
+// Len returns the length of the struct (should be 3)
+func (c *coord3DImpl) Len() int {
+	return c.vec.Len()
+}
+
+// AtX returns the X coord value
+func (c *coord3DImpl) AtX() float64 {
+	return c.vec.AtVec(0)
+}
+
+// AtY returns the Y coord value
+func (c *coord3DImpl) AtY() float64 {
+	return c.vec.AtVec(1)
+}
+
+// AtZ returns the Z coord value
+func (c *coord3DImpl) AtZ() float64 {
+	return c.vec.AtVec(2)
+}
+
+// X updates the input value of the x axis
+func (c *coord3DImpl) X(val float64) {
+	c.vec.SetVec(0, val)
+}
+
+// Y updates the input value of the y axis
+func (c *coord3DImpl) Y(val float64) {
+	c.vec.SetVec(1, val)
+}
+
+// Z updates the input value of the z axis
+func (c *coord3DImpl) Z(val float64) {
+	c.vec.SetVec(2, val)
+}
 
 // Matrix is a struct holding the NxM matrix values
 type Matrix mat.Matrix
@@ -15,8 +68,8 @@ func NewCoord3D(
 	x float64,
 	y float64,
 	z float64,
-) mat.Vector {
-	return mat.NewVecDense(3, []float64{x, y, z})
+) Coord3D {
+	return &coord3DImpl{mat.NewVecDense(3, []float64{x, y, z})}
 }
 
 // NewMatrix returns new matrix given the data

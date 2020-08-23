@@ -5,6 +5,41 @@ import (
 	"testing"
 )
 
+func TestNewCoord(t *testing.T) {
+	got := NewCoord3D(1, 2, 3)
+
+	if got.Len() != 3 {
+		t.Fatal("Len() should always be 3")
+	}
+	if got.AtVec(0) != 1 {
+		t.Fatal("AtVec(0) should retrieve the first value (x axis)")
+	}
+	if got.AtVec(2) != 3 {
+		t.Fatal("AtVec(2) should retrieve the first value (z axis)")
+	}
+	if got.AtX() != 1 {
+		t.Fatal("AtX() should retrieve the first value (x axis)")
+	}
+	if got.AtY() != 2 {
+		t.Fatal("AtY() should retrieve the first value (y axis)")
+	}
+	if got.AtZ() != 3 {
+		t.Fatal("AtZ() should retrieve the first value (z axis)")
+	}
+	got.X(4)
+	got.Y(5)
+	got.Z(6)
+	if got.AtX() != 4 {
+		t.Fatal("AtX() should retrieve the updated value (x axis)")
+	}
+	if got.AtY() != 5 {
+		t.Fatal("AtY() should retrieve the updated value (y axis)")
+	}
+	if got.AtZ() != 6 {
+		t.Fatal("AtZ() should retrieve the updated value (z axis)")
+	}
+}
+
 func TestMatrixFrom4Coord3D(t *testing.T) {
 	m := MatrixFrom4Coord3D(
 		NewCoord3D(1, 2, 3),
