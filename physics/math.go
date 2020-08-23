@@ -14,10 +14,16 @@ type Coord3D interface {
 	X(float64)
 	Y(float64)
 	Z(float64)
+	Vector() mat.Vector
 }
 
 type coord3DImpl struct {
 	vec *mat.VecDense
+}
+
+// AtVec returns the value at i index
+func (c *coord3DImpl) Vector() mat.Vector {
+	return c.vec
 }
 
 // AtVec returns the value at i index
@@ -123,4 +129,36 @@ func BarycentricCoords(
 		detAPCD / detABCD,
 		detABPD / detABCD,
 		detABCP / detABCD
+}
+
+// Dot returns the dot product of Coord3D a and b
+func Dot(a Coord3D, b Coord3D) float64 {
+	return mat.Dot(a.Vector(), b.Vector())
+}
+
+// Add returns the coord a + b
+func Add(a Coord3D, b Coord3D) Coord3D {
+	return NewCoord3D(
+		a.AtX()+b.AtX(),
+		a.AtY()+b.AtY(),
+		a.AtZ()+b.AtZ(),
+	)
+}
+
+// Sub returns the coord a - b
+func Sub(a Coord3D, b Coord3D) Coord3D {
+	return NewCoord3D(
+		a.AtX()-b.AtX(),
+		a.AtY()-b.AtY(),
+		a.AtZ()-b.AtZ(),
+	)
+}
+
+// Mult returns the coord a * b
+func Mult(a Coord3D, b Coord3D) Coord3D {
+	return NewCoord3D(
+		a.AtX()*b.AtX(),
+		a.AtY()*b.AtY(),
+		a.AtZ()*b.AtZ(),
+	)
 }

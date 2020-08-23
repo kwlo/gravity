@@ -100,3 +100,57 @@ func TestBarycentricCoords(t *testing.T) {
 		t.Fatalf("FAILED: %#v", values)
 	}
 }
+
+func TestDot(t *testing.T) {
+	got := Dot(
+		NewCoord3D(1, 2, 3),
+		NewCoord3D(4, 5, 6),
+	)
+
+	want := 32.0
+	if got != want {
+		t.Fatalf("FAILED: Got %v instead of %v", got, want)
+	}
+}
+
+func TestAdd(t *testing.T) {
+	got := Add(
+		NewCoord3D(1, 2, 3),
+		NewCoord3D(4, 5, 6),
+	)
+
+	want := NewCoord3D(5, 7, 9)
+	if got.AtX() != want.AtX() ||
+		got.AtY() != want.AtY() ||
+		got.AtZ() != want.AtZ() {
+		t.Fatalf("FAILED: Got %v instead of %v", got, want)
+	}
+}
+
+func TestSub(t *testing.T) {
+	got := Sub(
+		NewCoord3D(1, 2, 3),
+		NewCoord3D(4, 5, 6),
+	)
+
+	want := NewCoord3D(-3, -3, -3)
+	if got.AtX() != want.AtX() ||
+		got.AtY() != want.AtY() ||
+		got.AtZ() != want.AtZ() {
+		t.Fatalf("FAILED: Got %v instead of %v", got, want)
+	}
+}
+
+func TestMult(t *testing.T) {
+	got := Mult(
+		NewCoord3D(1, 2, 3),
+		NewCoord3D(4, 5, 6),
+	)
+
+	want := NewCoord3D(4, 10, 18)
+	if got.AtX() != want.AtX() ||
+		got.AtY() != want.AtY() ||
+		got.AtZ() != want.AtZ() {
+		t.Fatalf("FAILED: Got %v instead of %v", got, want)
+	}
+}
